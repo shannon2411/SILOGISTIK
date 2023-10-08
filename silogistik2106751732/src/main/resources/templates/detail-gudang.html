@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Gudang</title>
+    <style>
+        /* Style for containers */
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        /* Style for buttons */
+        .button {
+            float: right;
+        }
+    </style>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar(page='gudang')}"></nav>
+<!-- First Container -->
+<div class="w-75 mx-auto">
+    <h2 class="fw-bold">Detail Gudang</h2>
+<!--    <a type="button" class="btn btn-md btn-primary" href="@{/gudang/{idGudang}(idGudang=${gudang.idGudang})/restock-barang}">+Restock Barang</a>-->
+</div>
+
+<!-- Second Container -->
+<div class="container">
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">Nama Gudang</p>
+            <p class="col" th:text="': ' + ${gudang.namaGudang}"></p>
+        </div>
+    </div>
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">Alamat Gudang</p>
+            <p class="col" th:text="': ' + ${gudang.alamatGudang}"></p>
+        </div>
+    </div>
+    <h3 class="fw-bold">Daftar Barang Tersedia</h3>
+    <div th:if="${gudang.listBarangDimuatGudang.size() != 0}">
+        <table id="myTable" class="display">
+            <thead class="mt-3">
+            <tr class="bg-dark text-white">
+                <th class="fw-normal">No</th>
+                <th class="fw-normal">SKU</th>
+                <th class="fw-normal">Merk</th>
+                <th class="fw-normal">Stok</th>
+                <th class="fw-normal">Harga</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="barangGudang, iterationStatus: ${gudang.listBarangDimuatGudang}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${barangGudang.skuBarang}"></td>
+                <td th:text="${barangGudang.merk}"></td>
+                <td th:text="${barangGudang.hargaBarang}"></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div th:unless="${gudang.listBarangDimuatGudang.size() != 0}">
+        <h3 class="mt-3 text-secondary">Belum ada barang!</h3>
+    </div>
+
+    <a type="button" class="btn btn-md btn-primary" href="/gudang">Kembali</a>
+</div>
+</body>
+</html>

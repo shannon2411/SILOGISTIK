@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail Barang</title>
+  <style>
+    /* Style for containers */
+    .container {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin: 10px;
+    }
+
+    /* Style for buttons */
+    .button {
+        float: right;
+    }
+  </style>
+  <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar(page='barang')}"></nav>
+<!-- First Container -->
+<div class="container">
+  <h2>Detail Barang</h2>
+</div>
+
+<!-- Second Container -->
+<div class="container">
+  <p th:text="'Merk: ' + ${merk}'"></p>
+  <p th:text="'SKU: ' + ${sku}'"></p>
+  <p th:text="'Tipe Barang: ' + ${tipeBarang}'"></p>
+  <p th:text="'Total stok: ' + ${}'"></p>
+  <p th:text="'Harga: ' + ${hargaBarang}'"></p>
+  <h3>Daftar Gudang</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Header 1</th>
+      <th>Header 2</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Data 1</td>
+      <td>Data 2</td>
+    </tr>
+    <tr>
+      <td>Data 3</td>
+      <td>Data 4</td>
+    </tr>
+    </tbody>
+  </table>
+  <a type="button" class="btn btn-md btn-primary" href="/barang">Kembali</a>
+</div>
+</body>
+</html>

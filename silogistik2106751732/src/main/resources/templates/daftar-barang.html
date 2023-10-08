@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
+    <title>View All Barang</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar(page='barang')}"></nav>
+<div class="container">
+
+    <div class="text-center pt-5">
+        <h2>Daftar Barang</h2>
+        <a type="button" class="btn btn-md btn-primary" th:href="@{/barang/tambah}">+Tambah Barang</a>
+    </div>
+    <div th:if="${listBarang.size() != 0}">
+        <table id="myTable" class="display">
+
+            <thead class="bg-dark">
+            <tr>
+                <th class="fw-normal">No</th>
+                <th class="fw-normal">SKU</th>
+                <th class="fw-normal">Merk</th>
+                <th class="fw-normal">Stok</th>
+                <th class="fw-normal">Harga</th>
+                <th class="fw-normal">Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="barang, iterationStatus: ${listBarang}"
+                th:style="${iterationStatus.even} ? 'font-weight:bold;'"
+            >
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${barang.sku}"></td>
+                <td th:text="${barang.merk}"></td>
+                <td th:text=></td>
+                <td th:text="${barang.hargaBarang}"></td>
+                <td>
+                    <a type="button" class="btn btn-md btn-secondary" th:href="@{/barang/{idBarang}(idBarang=${barang.sku})}">Detail</a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div th:unless="${listBarang.size() != 0}">
+        <h3 class="text-center mt-3 text-secondary">Belum ada barang!</h3>
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

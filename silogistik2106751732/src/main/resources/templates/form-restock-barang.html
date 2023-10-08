@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  <title>Form Restock Gudang</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar(page='gudang')}"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Restock Gudang</h2>
+        <br>
+        <p th:text="'Nama Gudang: ' + ${namaGudang}'"></p>
+        <p th:text="'Alamat Gudang: ' + ${alamatGudang}'"></p>
+        <form th:action="@{@{/gudang/{idGudang}(idGudang=${gudang.idGudang})/restock-barang}}" th:object="${DTO}" method="POST">
+          <th>
+            <button class="btn btn-primary" type="submit" name="addRow">+Tambah Barang</button>
+          </th>
+          <table class="table">
+            <thead>
+            <th>#</th>
+            <th>Barang</th>
+            <th>Kuantitas</th>
+            <th></th>
+            </thead>
+            <tbody>
+            <tr th:each="sertifikasi, iterationStatus : *{listSertifikasi}">
+              <td th:text="${iterationStatus.count}"></td>
+              <td>
+              <tr th:each="penulis, iterationStatus : *{listPenulis}">
+                <td>
+                  <select th:field="*{listPenulis[__${iterationStatus.index}__].idPenulis}" class="form-control">
+                    <div th:each="penulisExisting : ${listPenulisExisting}">
+                      <option th:value="${penulisExisting.idPenulis}" th:text="${penulisExisting.namaPenulis}"></option>
+                    </div>
+                  </select>
+              </tr>
+              </td>
+              <td>
+                <input class="form-control" type="text" th:field="*{listSertifikasi[__${iterationStatus.index}__].penerbitSertifikasi}">
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <button class="btn btn-primary" type="submit">Simpan</button>
+          <a class="btn btn-primary" href="@{/gudang/{idGudang}(idGudang=${gudang.idGudang})}">Batal</a>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

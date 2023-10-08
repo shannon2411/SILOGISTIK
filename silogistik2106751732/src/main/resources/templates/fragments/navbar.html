@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+<body>
+<nav th:fragment="navbar (page)" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand fw-bold text-primary ms-3" th:classappend="${#strings.toLowerCase(page) == 'home' ? 'active' : ''}" th:href="@{/}">SILOGISTIK</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>  
+    </button>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" th:classappend="${#strings.toLowerCase(page) == 'gudang' ? 'active' : ''}" th:href="@{/}" id="gudangDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true">Gudang</a>
+            <div class="dropdown-menu" aria-labelledby="gudangDropdown">
+                <a class="dropdown-item" th:classappend="${#strings.toLowerCase(page) == 'daftargudang' ? 'active' : ''}" th:href="@{/gudang}">Daftar Gudang</a>
+                <a class="dropdown-item" th:classappend="${#strings.toLowerCase(page) == 'caribarang' ? 'active' : ''}" th:href="@{/}">Cari Barang</a>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${#strings.toLowerCase(page) == 'barang' ? 'active' : ''}" th:href="@{/}">Barang</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${#strings.toLowerCase(page) == 'pengiriman' ? 'active' : ''}" th:href="@{/}">Permintaan Pengiriman</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${#strings.toLowerCase(page) == 'bonus' ? 'active' : ''}" th:href="@{/}">Bonus</a>
+        </li>
+      </ul>
+    </div>
+</nav>
+</body>
+</html>

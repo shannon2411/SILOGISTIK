@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
+    <title>View All Gudang</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar(page='daftargudang')}"></nav>
+<div class="container">
+
+    <div class="text-center pt-5">
+        <h2>Daftar Gudang</h2>
+    </div>
+
+    <div th:if="${listGudang.size() != 0}">
+        <table id="myTable" class="display">
+            <thead class="mt-3">
+            <tr class="bg-dark text-white">
+                <th class="fw-normal">No</th>
+                <th class="fw-normal">Nama</th>
+                <th class="fw-normal">Alamat Gudang</th>
+                <th class="fw-normal">Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="gudang, iterationStatus: ${listGudang}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${gudang.namaGudang}"></td>
+                <td th:text="${gudang.alamatGudang}"></td>
+                <td>
+                    <a type="button" class="btn btn-md btn-secondary" th:href="@{/gudang/{idGudang}(idGudang=${gudang.idGudang})}">Detail</a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div th:unless="${listGudang.size() != 0}">
+        <h3 class="text-center mt-3 text-secondary">Belum ada gudang!</h3>
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
