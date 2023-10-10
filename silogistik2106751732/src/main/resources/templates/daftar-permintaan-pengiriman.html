@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
+  <title>View All Permintaan Pengiriman</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar(page='pengiriman')}"></nav>
+<div class="container">
+  <div class="text-center pt-5">
+    <h2>Daftar Permintaan Pengiriman</h2>
+    <a type="button" class="btn btn-md btn-primary" th:href="@{/permintaan-pengiriman/tambah}">+Tambah Permintaan Pengiriman</a>
+  </div>
+
+  <div th:if="${listPermintaanPengiriman.size() != 0}">
+    <table id="myTable" class="display">
+      <thead class="mt-3">
+      <tr class="bg-dark text-white">
+        <th class="fw-normal">No</th>
+        <th class="fw-normal">Waktu Permintaan</th>
+        <th class="fw-normal">Nomor Pengiriman</th>
+        <th class="fw-normal">Nama Penerima</th>
+        <th class="fw-normal">Alamat Penerima</th>
+        <th class="fw-normal">Tanggal Pengiriman</th>
+        <th class="fw-normal">Action</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr th:each="permintaanPengiriman, iterationStatus: ${listPermintaanPengiriman}">
+        <td th:text="${iterationStatus.count}"></td>
+        <td th:text="${permintaanPengiriman.waktuPermintaan}"></td>
+        <td th:text="${permintaanPengiriman.nomorPengiriman}"></td>
+        <td th:text="${permintaanPengiriman.namaPenerima}"></td>
+        <td th:text="${permintaanPengiriman.alamatPenerima}"></td>
+        <td th:text="${permintaanPengiriman.tanggalPengiriman}"></td>
+        <td>
+          <a type="button" class="btn btn-md btn-secondary" th:href="@{/permintaan-pengiriman/{idPermintaanPengiriman}(idPermintaanPengiriman=${permintaanPengiriman.idPermintaanPengiriman})}">Detail</a>
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
+  <div th:unless="${listPermintaanPengiriman.size() != 0}">
+    <h3 class="text-center mt-3 text-secondary">Belum ada permintaan pengiriman!</h3>
+  </div>
+
+
+</div>
+
+</body>
+
+</html>
