@@ -3,6 +3,7 @@ package apap.ti.silogistik2106751732.controller;
 import apap.ti.silogistik2106751732.DTO.GudangMapper;
 import apap.ti.silogistik2106751732.DTO.request.RestockBarangRequestDTO;
 import apap.ti.silogistik2106751732.DTO.response.ReadGudangResponseDTO;
+import apap.ti.silogistik2106751732.model.Barang;
 import apap.ti.silogistik2106751732.model.Gudang;
 import apap.ti.silogistik2106751732.model.GudangBarang;
 import apap.ti.silogistik2106751732.service.BarangService;
@@ -116,5 +117,16 @@ public class GudangController {
 
         return "redirect:/gudang/" + newGudang.getIdGudang(); // Adjust the view name as needed
 
+    }
+
+    @GetMapping("/cari-barang")
+    public String findGudangByBarangForm(@RequestParam(value = "sku", required = false) String skuBarang, Model model) {
+        List<Barang> listBarang = barangService.getAllBarang();
+        model.addAttribute("listBarang", listBarang);
+        if (skuBarang != null) {
+            List<GudangBarang> listGudangMemuatBarang = gudangBarangService.getAllGudangBarangBySkuBarang(skuBarang);
+            model.addAttribute("listGudang", listGudangMemuatBarang);
+        }
+        return "form-find-barang";
     }
 }
