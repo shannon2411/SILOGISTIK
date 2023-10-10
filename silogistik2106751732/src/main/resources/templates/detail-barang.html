@@ -6,53 +6,98 @@
   <style>
     /* Style for containers */
     .container {
-        border: 1px solid #ccc;
-        padding: 20px;
-        margin: 10px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin: 10px;
     }
 
     /* Style for buttons */
     .button {
-        float: right;
+      float: right;
     }
   </style>
   <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
   <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
 </head>
 <body>
-<nav th:replace="~{fragments/navbar :: navbar(page='barang')}"></nav>
+<nav th:replace="~{fragments/navbar :: navbar(page='gudang')}"></nav>
 <!-- First Container -->
-<div class="container">
-  <h2>Detail Barang</h2>
+<div class="w-75 mx-auto">
+  <h2 class="fw-bold">Detail Barang</h2>
 </div>
 
 <!-- Second Container -->
-<div class="container">
-  <p th:text="'Merk: ' + ${merk}'"></p>
-  <p th:text="'SKU: ' + ${sku}'"></p>
-  <p th:text="'Tipe Barang: ' + ${tipeBarang}'"></p>
-  <p th:text="'Total stok: ' + ${}'"></p>
-  <p th:text="'Harga: ' + ${hargaBarang}'"></p>
-  <h3>Daftar Gudang</h3>
-  <table>
-    <thead>
-    <tr>
-      <th>Header 1</th>
-      <th>Header 2</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Data 1</td>
-      <td>Data 2</td>
-    </tr>
-    <tr>
-      <td>Data 3</td>
-      <td>Data 4</td>
-    </tr>
-    </tbody>
-  </table>
-  <a type="button" class="btn btn-md btn-primary" href="/barang">Kembali</a>
+<div class="container w-75">
+  <div class="d-grid w-75">
+    <div class="row">
+      <p class="col">Merk</p>
+      <p class="col" th:text="': ' + ${barang.merk}"></p>
+    </div>
+  </div>
+  <div class="d-grid w-75">
+    <div class="row">
+      <p class="col">SKU</p>
+      <p class="col" th:text="': ' + ${barang.sku}"></p>
+    </div>
+  </div>
+  <div class="d-grid w-75">
+    <div class="row">
+      <p class="col">Tipe Barang</p>
+      <p class="col" th:if="${barang.tipeBarang == 1}">: Produk Elektronik</p>
+      <p class="col" th:if="${barang.tipeBarang == 2}">: Pakaian & Aksesoris</p>
+      <p class="col" th:if="${barang.tipeBarang == 3}">: Makanan & Minuman</p>
+      <p class="col" th:if="${barang.tipeBarang == 4}">: Kosmetik</p>
+      <p class="col" th:if="${barang.tipeBarang == 5}">: Perlengkapan Rumah</p>
+    </div>
+  </div>
+  <div class="d-grid w-75">
+    <div class="row">
+      <p class="col">Total Stok</p>
+      <p class="col" th:text="': ' + ${barang.totalStok}"></p>
+    </div>
+  </div>
+  <div class="d-grid w-75">
+    <div class="row">
+      <p class="col">Harga</p>
+      <p class="col" th:text="': Rp' + ${#numbers.formatDecimal(barang.hargaBarang, 0, 'POINT', 0, 'POINT')}"></p>
+    </div>
+  </div>
+<!--  <div class="d-grid w-75">-->
+<!--    <div class="row">-->
+<!--      <p class="col">Total Stok</p>-->
+<!--      <p class="col" th:text="': ' + ${barang.totalStok}"></p>-->
+<!--    </div>-->
+<!--  </div>-->
+  <h4 class="fw-bold">Daftar Gudang</h4>
+  <div th:if="${barang.listGudangMemuatBarang.size() != 0}">
+    <table id="myTable" class="display">
+      <thead class="mt-3">
+      <tr class="bg-dark text-white">
+        <th class="fw-normal">No</th>
+        <th class="fw-normal">Nama Gudang</th>
+        <th class="fw-normal">Alamat Gudang</th>
+        <th class="fw-normal">Stok</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr th:each="gudangBarang, iterationStatus: ${barang.listGudangMemuatBarang}">
+        <td th:text="${iterationStatus.count}"></td>
+        <td th:text="${gudangBarang.namaGudang}"></td>
+        <td th:text="${gudangBarang.alamatGudang}"></td>
+        <td th:text="${gudangBarang.stok}"></td>
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
+  <div th:unless="${barang.listGudangMemuatBarang.size() != 0}">
+    <h3 class="mt-3 text-secondary">Belum ada gudang yang menampung barang ini!</h3>
+  </div>
+
+  <a type="button" class="btn btn-md btn-primary" href="/gudang">Kembali</a>
 </div>
 </body>
 </html>

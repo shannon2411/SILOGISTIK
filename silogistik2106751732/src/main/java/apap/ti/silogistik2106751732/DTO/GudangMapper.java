@@ -1,6 +1,7 @@
 package apap.ti.silogistik2106751732.DTO;
 
 import apap.ti.silogistik2106751732.DTO.request.CreateGudangRequestDTO;
+import apap.ti.silogistik2106751732.DTO.request.RestockBarangRequestDTO;
 import apap.ti.silogistik2106751732.DTO.response.ReadGudangBarangResponseDTO;
 import apap.ti.silogistik2106751732.DTO.response.ReadGudangResponseDTO;
 import apap.ti.silogistik2106751732.model.Gudang;
@@ -17,6 +18,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface GudangMapper {
     Gudang createGudangRequestDTOToGudang(CreateGudangRequestDTO createGudangRequestDTO);
+    RestockBarangRequestDTO gudangToRestockBarangRequestDTO(Gudang gudang);
+    Gudang restockBarangRequestDTOtoGudang(RestockBarangRequestDTO restockDto);
 
     @Mapping(target = "listBarangDimuatGudang", ignore = true)
     ReadGudangResponseDTO gudangToReadGudangResponseDTO(Gudang gudang);
@@ -27,6 +30,7 @@ public interface GudangMapper {
         for (GudangBarang gudangBarang: gudang.getListBarangDimuatGudang()) {
             ReadGudangBarangResponseDTO gudangBarangDto = new ReadGudangBarangResponseDTO();
             gudangBarangDto.setId(gudangBarang.getId());
+            gudangBarangDto.setSkuBarang(gudangBarang.getSkuBarang().getSku());
             gudangBarangDto.setStok(gudangBarang.getStok());
             gudangBarangDto.setHargaBarang(gudangBarang.getSkuBarang().getHargaBarang());
             gudangBarangDto.setMerk(gudangBarang.getSkuBarang().getMerk());
@@ -34,4 +38,5 @@ public interface GudangMapper {
         }
         responseDTO.setListBarangDimuatGudang(listGudangBarangDto);
     }
+
 }

@@ -24,15 +24,14 @@
                     <br><br>
 
                     Tipe Barang: <br>
-                    <tr th:each="penulis, iterationStatus : *{listPenulis}">
-                        <td>
-                            <select th:field="*{listPenulis[__${iterationStatus.index}__].idPenulis}" class="form-control">
-                                <div th:each="penulisExisting : ${listPenulisExisting}">
-                                    <option th:value="${penulisExisting.idPenulis}" th:text="${penulisExisting.namaPenulis}"></option>
-                                </div>
-                            </select>
-                        </td>
-                    </tr>
+
+                    <select type="number" th:field="*{tipeBarang}" class="form-control">
+                        <option value="1">Produk Elektronik</option>
+                        <option value="2">Pakaian & Aksesoris</option>
+                        <option value="3">Makanan & Minuman</option>
+                        <option value="4">Kosmetik</option>
+                        <option value="5">Perlengkapan Rumah</option>
+                    </select>
                     <br><br>
 
                     Harga: <br>

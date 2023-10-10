@@ -12,6 +12,21 @@
 
 <body>
 <nav th:replace="~{fragments/navbar :: navbar(page='barang')}"></nav>
+<div
+        th:if="${flashMessage}"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+        id="myAlert"
+        style="position: fixed; top: 50px; left: 10%; right: 10%; z-index: 9999; width: 75%"
+        th:text="${flashMessage}"
+>
+    <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+    ></button>
+</div>
 <div class="container">
 
     <div class="text-center pt-5">
@@ -21,7 +36,7 @@
     <div th:if="${listBarang.size() != 0}">
         <table id="myTable" class="display">
 
-            <thead class="bg-dark">
+            <thead class="bg-dark text-white">
             <tr>
                 <th class="fw-normal">No</th>
                 <th class="fw-normal">SKU</th>
@@ -33,14 +48,12 @@
             </thead>
 
             <tbody>
-            <tr th:each="barang, iterationStatus: ${listBarang}"
-                th:style="${iterationStatus.even} ? 'font-weight:bold;'"
-            >
+            <tr th:each="barang, iterationStatus: ${listBarang}">
                 <td th:text="${iterationStatus.count}"></td>
                 <td th:text="${barang.sku}"></td>
                 <td th:text="${barang.merk}"></td>
-                <td th:text=></td>
-                <td th:text="${barang.hargaBarang}"></td>
+                <td th:text="${barang.totalStok}"></td>
+                <td th:text="'Rp' + ${#numbers.formatDecimal(barang.hargaBarang, 0, 'POINT', 0, 'POINT')}"></td>
                 <td>
                     <a type="button" class="btn btn-md btn-secondary" th:href="@{/barang/{idBarang}(idBarang=${barang.sku})}">Detail</a>
                 </td>
@@ -55,6 +68,12 @@
 
 
 </div>
+<script type="text/javascript">
+    setTimeout(function () {
+        var myAlert = document.getElementById("myAlert");
+        myAlert.style.display = "none";
+    }, 3000);
+</script>
 
 </body>
 

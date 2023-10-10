@@ -16,34 +16,50 @@
       <div class="justify-content-center">
         <h2>Restock Gudang</h2>
         <br>
-        <p th:text="'Nama Gudang: ' + ${namaGudang}'"></p>
-        <p th:text="'Alamat Gudang: ' + ${alamatGudang}'"></p>
-        <form th:action="@{@{/gudang/{idGudang}(idGudang=${gudang.idGudang})/restock-barang}}" th:object="${DTO}" method="POST">
+        <div class="d-grid w-75">
+          <div class="row">
+            <p class="col">Nama Gudang</p>
+            <p class="col" th:text="': ' + ${gudangDTO.namaGudang}"></p>
+          </div>
+        </div>
+        <div class="d-grid w-75">
+          <div class="row">
+            <p class="col">Alamat Gudang</p>
+            <p class="col" th:text="': ' + ${gudangDTO.alamatGudang}"></p>
+          </div>
+        </div>
+        <form th:action="@{/gudang/} + ${gudangDTO.idGudang} + @{/restock-barang}" th:object="${gudangDTO}" method="POST">
+          <input class="form-control" type="hidden" th:field="*{idGudang}"/>
+          <input class="form-control" type="hidden" th:field="*{namaGudang}"/>
+          <input class="form-control" type="hidden" th:field="*{alamatGudang}"/>
           <th>
             <button class="btn btn-primary" type="submit" name="addRow">+Tambah Barang</button>
           </th>
           <table class="table">
             <thead>
-            <th>#</th>
+            <th>No</th>
             <th>Barang</th>
             <th>Kuantitas</th>
             <th></th>
             </thead>
             <tbody>
-            <tr th:each="sertifikasi, iterationStatus : *{listSertifikasi}">
+            <tr th:each="gudangBarang, iterationStatus : *{listBarangDimuatGudang}">
               <td th:text="${iterationStatus.count}"></td>
+              <input class="form-control" type="hidden" th:field="*{listBarangDimuatGudang[__${iterationStatus.index}__].id}"/>
+
+              <input class="form-control" type="hidden" th:field="*{listBarangDimuatGudang[__${iterationStatus.index}__].idGudang}"/>
               <td>
-              <tr th:each="penulis, iterationStatus : *{listPenulis}">
-                <td>
-                  <select th:field="*{listPenulis[__${iterationStatus.index}__].idPenulis}" class="form-control">
-                    <div th:each="penulisExisting : ${listPenulisExisting}">
-                      <option th:value="${penulisExisting.idPenulis}" th:text="${penulisExisting.namaPenulis}"></option>
-                    </div>
-                  </select>
-              </tr>
+                <select required class="form-control" th:field="*{listBarangDimuatGudang[__${iterationStatus.index}__].skuBarang}">
+                  <div th:each="barang : ${listBarang}">
+                    <option th:if="${barang}" th:value="${barang.sku}" th:text="${barang.merk}"></option>
+                  </div>
+                </select>
               </td>
               <td>
-                <input class="form-control" type="text" th:field="*{listSertifikasi[__${iterationStatus.index}__].penerbitSertifikasi}">
+                <input required class="form-control" type="number" th:field="*{listBarangDimuatGudang[__${iterationStatus.index}__].stok}">
+              </td>
+              <td>
+                <button class="btn btn-danger" th:value="${iterationStatus.index}" id="deleteRow" type="submit" name="deleteRow">Hapus</button>
               </td>
             </tr>
             </tbody>
@@ -57,5 +73,6 @@
     </div>
   </div>
 </div>
+
 </body>
 </html>
