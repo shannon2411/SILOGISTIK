@@ -3,12 +3,8 @@ package apap.ti.silogistik2106751732.controller;
 import apap.ti.silogistik2106751732.DTO.BarangMapper;
 import apap.ti.silogistik2106751732.DTO.request.CreateBarangRequestDTO;
 import apap.ti.silogistik2106751732.DTO.response.ReadBarangResponseDTO;
-import apap.ti.silogistik2106751732.DTO.response.ReadGudangBarangResponseDTO;
-import apap.ti.silogistik2106751732.DTO.response.ReadGudangResponseDTO;
 import apap.ti.silogistik2106751732.model.Barang;
-import apap.ti.silogistik2106751732.model.Gudang;
 import apap.ti.silogistik2106751732.service.BarangService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +41,7 @@ public class BarangController {
     @GetMapping("/tambah")
     public String formAddBarang(Model model) {
         //kirim bukuDTO untuk nantinya isian field di-bind kesini.
-        var barangDTO = new CreateBarangRequestDTO();
+        CreateBarangRequestDTO barangDTO = new CreateBarangRequestDTO();
         model.addAttribute("barangDTO", barangDTO);
 
         return "form-tambah-barang";
@@ -74,6 +70,27 @@ public class BarangController {
         model.addAttribute("barang", barangResponse);
         return "detail-barang";
     };
+
+    @GetMapping("/{skuBarang}/ubah")
+    public String formUbahBarang(@PathVariable(value = "skuBarang") String skuBarang, Model model) {
+        Barang barang = barangService.getBarangById(skuBarang);
+        model.addAttribute("barangDTO", barang);
+        return "form-ubah-barang";
+    }
+
+    @PostMapping("/{skuBarang}/ubah")
+    public String formUbahBarang(@ModelAttribute Barang barang, @PathVariable(value = "skuBarang") String skuBarang, Model model, BindingResult bindingResult, RedirectAttributes redirectAttrs) {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getFieldErrors().stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
+            model.addAttribute("validationErrors", errors);
+            return "error/400";
+        } else {
+            System.out.println("no error detected");
+        }
+        barangService.saveBarang(barang);
+        redirectAttrs.addFlashAttribute("flashMessage", String.format("Barang %s (%s) berhasil diubah", barang.getMerk(), skuBarang));
+        return "redirect:/barang/" + skuBarang;
+    }
 
 
 

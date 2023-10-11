@@ -17,6 +17,7 @@ import java.util.List;
 public interface BarangMapper {
     Barang createBarangRequestDTOToBarang(CreateBarangRequestDTO createBarangRequestDTO);
 
+
     @Mapping(target = "listGudangMemuatBarang", ignore = true)
     @Mapping(target = "totalStok", ignore = true)
     ReadBarangResponseDTO barangToReadBarangResponseDTO(Barang barang);

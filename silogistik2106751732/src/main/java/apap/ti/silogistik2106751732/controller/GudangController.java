@@ -113,7 +113,7 @@ public class GudangController {
 
 
         // Add variables for rendering in Thymeleaf, if needed
-        redirectAttrs.addAttribute("flash-message", "Berhasil melakukan restock");
+        redirectAttrs.addFlashAttribute("flashMessage", "Berhasil melakukan restock");
 
         return "redirect:/gudang/" + newGudang.getIdGudang(); // Adjust the view name as needed
 

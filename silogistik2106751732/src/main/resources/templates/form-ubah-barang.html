@@ -18,25 +18,23 @@
             <div class="justify-content-center">
                 <h2>Ubah Barang </h2>
                 <br>
-                <form th:action="@{/barang/{idBarang}(idBarang=${sku})/ubah}" th:object="${barangDTO}" method="POST">
+                <form th:action="@{/barang/} + ${barangDTO.sku} + @{/ubah}" th:object="${barangDTO}" method="POST">
                     SKU: <br>
                     <input class="form-control" type="text" th:field="*{sku}" readonly/>
                     <br><br>
 
                     Merk Barang: <br>
-                    <input class="form-control" type="text" th:field="*{merk}" />
+                    <input required class="form-control" type="text" th:field="*{merk}" />
                     <br><br>
 
                     Tipe Barang: <br>
-                    <tr th:each="penulis, iterationStatus : *{listPenulis}">
-                        <td>
-                            <select th:field="*{listPenulis[__${iterationStatus.index}__].idPenulis}" class="form-control" disabled>
-                                <div th:each="penulisExisting : ${listPenulisExisting}">
-                                    <option th:value="${penulisExisting.idPenulis}" th:text="${penulisExisting.namaPenulis}"></option>
-                                </div>
-                            </select>
-                        </td>
-                    </tr>
+                    <select type="number" th:field="*{tipeBarang}" class="form-control" readonly>
+                        <option class="d-none" value="1">Produk Elektronik</option>
+                        <option class="d-none" value="2">Pakaian & Aksesoris</option>
+                        <option class="d-none" value="3">Makanan & Minuman</option>
+                        <option class="d-none" value="4">Kosmetik</option>
+                        <option class="d-none" value="5">Perlengkapan Rumah</option>
+                    </select>
                     <br><br>
 
                     Harga: <br>

@@ -23,9 +23,26 @@
 </head>
 <body>
 <nav th:replace="~{fragments/navbar :: navbar(page='gudang')}"></nav>
+<div
+        th:if="${flashMessage}"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+        id="myAlert"
+        style="position: fixed; top: 50px; left: 10%; right: 10%; z-index: 9999; width: 75%"
+        th:text="${flashMessage}"
+>
+  <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+  ></button>
+</div>
 <!-- First Container -->
-<div class="w-75 mx-auto">
+<div class="w-75 mx-auto d-flex justify-content-between">
   <h2 class="fw-bold">Detail Barang</h2>
+  <a type="button" class="btn btn-md btn-primary" th:href="@{/barang/} + ${barang.sku} + @{/ubah}"> Ubah Barang </a>
+
 </div>
 
 <!-- Second Container -->
@@ -99,5 +116,11 @@
 
   <a type="button" class="btn btn-md btn-primary" href="/barang">Kembali</a>
 </div>
+<script type="text/javascript">
+  setTimeout(function () {
+    var myAlert = document.getElementById("myAlert");
+    myAlert.style.display = "none";
+  }, 3000);
+</script>
 </body>
 </html>
