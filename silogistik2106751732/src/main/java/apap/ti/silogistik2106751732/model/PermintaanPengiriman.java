@@ -41,7 +41,7 @@ public class PermintaanPengiriman {
     private String alamatPenerima;
 
     @Column(name = "tanggal_pengiriman", nullable = false)
-     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate tanggalPengiriman;
 
     @Column(name = "biaya_pengiriman", nullable = false)

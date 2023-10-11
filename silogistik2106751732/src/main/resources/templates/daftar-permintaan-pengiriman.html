@@ -12,6 +12,21 @@
 
 <body>
 <nav th:replace="~{fragments/navbar :: navbar(page='pengiriman')}"></nav>
+<div
+        th:if="${flashMessage}"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+        id="myAlert"
+        style="position: fixed; top: 50px; left: 10%; right: 10%; z-index: 9999; width: 75%"
+        th:text="${flashMessage}"
+>
+  <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+  ></button>
+</div>
 <div class="container">
   <div class="text-center pt-5">
     <h2>Daftar Permintaan Pengiriman</h2>
@@ -35,7 +50,8 @@
       <tbody>
       <tr th:each="permintaanPengiriman, iterationStatus: ${listPermintaanPengiriman}">
         <td th:text="${iterationStatus.count}"></td>
-        <td th:text="${permintaanPengiriman.waktuPermintaan}"></td>
+        <td th:text="${permintaanPengiriman.waktuPermintaan}"</td>
+<!--        <td th:text="${#dates.format(permintaanPengiriman.waktuPermintaan, 'dd/MM/yyyy HH:mm:ss')}"></td>-->
         <td th:text="${permintaanPengiriman.nomorPengiriman}"></td>
         <td th:text="${permintaanPengiriman.namaPenerima}"></td>
         <td th:text="${permintaanPengiriman.alamatPenerima}"></td>
@@ -54,6 +70,12 @@
 
 
 </div>
+<script type="text/javascript">
+  setTimeout(function () {
+    var myAlert = document.getElementById("myAlert");
+    myAlert.style.display = "none";
+  }, 3000);
+</script>
 
 </body>
 

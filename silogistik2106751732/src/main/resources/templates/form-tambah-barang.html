@@ -12,11 +12,10 @@
 
 <body>
 <nav th:replace="~{fragments/navbar :: navbar(page='barang')}"></nav>
-<div class="container">
-    <div class="card m-4 p-4">
-        <div class="card-body">
+<div class="container mt-5">
+
             <div class="justify-content-center">
-                <h2>Tambah Barang </h2>
+                <h2 class="text-center">Tambah Barang </h2>
                 <br>
                 <form th:action="@{/barang/tambah}" th:object="${barangDTO}" method="POST">
                     Merk Barang: <br>
@@ -42,8 +41,6 @@
                     <a class="btn btn-primary" href="/barang">Batal</a>
                 </form>
             </div>
-        </div>
-    </div>
 </div>
 </body>
 </html>

@@ -52,7 +52,7 @@ public class BarangController {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors().stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
             model.addAttribute("validationErrors", errors);
-            return "error/400";
+            return "kon";
         } else {
             System.out.println("no error detected");
         }
@@ -83,7 +83,7 @@ public class BarangController {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors().stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
             model.addAttribute("validationErrors", errors);
-            return "error/400";
+            return "kon";
         } else {
             System.out.println("no error detected");
         }
