@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanService {
@@ -45,6 +46,16 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
     @Override
     public List<PermintaanPengiriman> getAllPermintaanPengiriman() {
         return permintaanPengirimanDB.findAll();
+    }
+
+    @Override
+    public PermintaanPengiriman getPermintaanPengirimanById(Long id) {
+        Optional<PermintaanPengiriman> permintaanPengiriman = permintaanPengirimanDB.findById(id);
+        if (permintaanPengiriman.isPresent()) {
+            return permintaanPengiriman.get();
+        } else {
+            return null;
+        }
     }
 
     @Override

@@ -12,6 +12,8 @@ public interface PermintaanPengirimanService {
 
     List<PermintaanPengiriman> getAllPermintaanPengiriman();
 
+    PermintaanPengiriman getPermintaanPengirimanById(Long id);
+
     CreatePermintaanPengirimanRequestDTO accumulateBarangPermintaan(CreatePermintaanPengirimanRequestDTO createPermintaanPengirimanRequestDTO);
 
     String generateNomorPengiriman(PermintaanPengiriman permintaanPengiriman);

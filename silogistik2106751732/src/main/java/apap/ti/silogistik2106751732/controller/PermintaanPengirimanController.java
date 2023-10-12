@@ -3,6 +3,7 @@ package apap.ti.silogistik2106751732.controller;
 import apap.ti.silogistik2106751732.DTO.PermintaanPengirimanMapper;
 import apap.ti.silogistik2106751732.DTO.request.CreatePermintaanPengirimanRequestDTO;
 import apap.ti.silogistik2106751732.DTO.request.RestockBarangRequestDTO;
+import apap.ti.silogistik2106751732.DTO.response.ReadGudangResponseDTO;
 import apap.ti.silogistik2106751732.DTO.response.ReadListItemPermintaanPengirimanResponseDTO;
 import apap.ti.silogistik2106751732.model.*;
 import apap.ti.silogistik2106751732.service.BarangService;
@@ -45,6 +46,13 @@ public class PermintaanPengirimanController {
         }
         model.addAttribute("listPermintaanPengiriman", listPermintaanPengirimanResponse);
         return "daftar-permintaan-pengiriman";
+    }
+
+    @GetMapping("/{idPermintaanPengiriman}")
+    public String detailPermintaanPengiriman(@PathVariable(value = "idPermintaanPengiriman") Long idPermintaanPengiriman, Model model) {
+        PermintaanPengiriman permintaanPengiriman = permintaanPengirimanService.getPermintaanPengirimanById(idPermintaanPengiriman);
+        model.addAttribute("permintaanPengiriman", permintaanPengiriman);
+        return "detail-permintaan-pengiriman";
     }
 
     @GetMapping("/tambah")

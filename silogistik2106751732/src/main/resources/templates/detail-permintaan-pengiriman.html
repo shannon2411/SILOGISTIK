@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Permintaan Pengiriman</title>
+    <style>
+        /* Style for containers */
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        /* Style for buttons */
+        .button {
+            float: right;
+        }
+    </style>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar(page='pengiriman')}"></nav>
+<div
+        th:if="${flashMessage}"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+        id="myAlert"
+        style="position: fixed; top: 50px; left: 10%; right: 10%; z-index: 9999; width: 75%"
+        th:text="${flashMessage}"
+>
+    <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+    ></button>
+</div>
+<!-- First Container -->
+<div class="w-75 mx-auto d-flex justify-content-between mt-5">
+    <h2 class="fw-bold">Detail Permintaan Pengiriman</h2>
+    <a type="button" class="btn btn-md btn-danger" th:href="@{/permintaan-pengiriman/} + ${permintaanPengiriman.idPermintaanPengiriman} + @{/cancek}">Cancel Permintaan</a>
+</div>
+
+<!-- Second Container -->
+<div class="container w-75">
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">No. Pengiriman</p>
+            <p class="col" th:text="': ' + ${permintaanPengiriman.nomorPengiriman}"></p>
+        </div>
+    </div>
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">Waktu Permintaan</p>
+            <p class="col" th:text="': ' + ${#temporals.format(permintaanPengiriman.waktuPermintaan, 'dd-MM-yyyy, HH:mm')}"></p>
+        </div>
+    </div>
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">Karyawan Bertugas</p>
+            <p class="col" th:text="': ' + ${permintaanPengiriman.karyawan.nama}"></p>
+        </div>
+    </div>
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">Waktu Pengiriman</p>
+            <p class="col" th:text="': ' + ${permintaanPengiriman.tanggalPengiriman}"></p>
+        </div>
+    </div>
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">Nama Penerima</p>
+            <p class="col" th:text="': ' + ${permintaanPengiriman.namaPenerima}"></p>
+        </div>
+    </div>
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">Alamat Penerima</p>
+            <p class="col" th:text="': ' + ${permintaanPengiriman.alamatPenerima}"></p>
+        </div>
+    </div>
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">Jenis Layanan</p>
+            <p th:if="${permintaanPengiriman.jenisLayanan == 1}" class="col">: Same Day</p>
+            <p th:if="${permintaanPengiriman.jenisLayanan == 2}" class="col">: Kilat</p>
+            <p th:if="${permintaanPengiriman.jenisLayanan == 3}" class="col">: Reguler</p>
+            <p th:if="${permintaanPengiriman.jenisLayanan == 4}" class="col">: Hemat</p>
+        </div>
+    </div>
+    <div class="d-grid w-75">
+        <div class="row">
+            <p class="col">Biaya Pengiriman</p>
+            <p class="col" th:text="': Rp' + ${#numbers.formatDecimal(permintaanPengiriman.biayaPengiriman, 0, 'POINT', 0, 'POINT')}"></p>
+        </div>
+    </div>
+
+    <h4 class="fw-bold">Daftar Barang Dipesan</h4>
+    <div th:if="${permintaanPengiriman.listBarangPermintaan.size() != 0}">
+        <table id="myTable" class="display">
+            <thead class="mt-3">
+            <tr class="bg-dark text-white">
+                <th class="fw-normal">No</th>
+                <th class="fw-normal">SKU</th>
+                <th class="fw-normal">Merk</th>
+                <th class="fw-normal">Kuantitas Pesanan</th>
+                <th class="fw-normal">Harga</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="barangPermintaan, iterationStatus: ${permintaanPengiriman.listBarangPermintaan}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${barangPermintaan.skuBarang.sku}"></td>
+                <td th:text="${barangPermintaan.skuBarang.merk}"></td>
+                <td th:text="${barangPermintaan.kuantitasPengiriman}"></td>
+                <td th:text="'Rp' + ${#numbers.formatDecimal(barangPermintaan.skuBarang.hargaBarang * barangPermintaan.kuantitasPengiriman, 0, 'POINT', 0, 'POINT')}"></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div th:unless="${permintaanPengiriman.listBarangPermintaan.size() != 0}">
+        <h3 class="mt-3 text-secondary">Tidak ada yang dipesan!</h3>
+    </div>
+
+    <a type="button" class="btn btn-md btn-primary" href="/gudang">Kembali</a>
+</div>
+<script type="text/javascript">
+    setTimeout(function () {
+        var myAlert = document.getElementById("myAlert");
+        myAlert.style.display = "none";
+    }, 3000);
+</script>
+</body>
+</html>
