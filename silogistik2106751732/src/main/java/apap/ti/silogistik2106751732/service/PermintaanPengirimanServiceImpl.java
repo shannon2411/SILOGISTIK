@@ -116,4 +116,20 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
         return permintaanPengirimanDB.findPermintaanPengirimanByWaktuPengirimanRangeAndBarang(sku, startDateTime, endDateTime);
     }
 
+    @Override
+    public PermintaanPengiriman cancelPermintaanPengiriman(Long idPermintaanPengiriman) throws ResponseStatusException {
+        Optional<PermintaanPengiriman> permintaanPengirimanOpt = permintaanPengirimanDB.findById(idPermintaanPengiriman);
+        if (permintaanPengirimanOpt.isPresent()) {
+            PermintaanPengiriman permintaanPengiriman = permintaanPengirimanOpt.get();
+            if (permintaanPengiriman.getIsCancelled()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Permintaan pengiriman ini sudah di-cancel");
+            }
+            permintaanPengiriman.setIsCancelled(true);
+            permintaanPengirimanDB.save(permintaanPengiriman);
+            return permintaanPengiriman;
+        } else {
+            return null;
+        }
+    }
+
 }

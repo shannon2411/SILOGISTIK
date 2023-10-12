@@ -11,13 +11,12 @@
 </head>
 
 <body>
-<nav th:replace="~{fragments/navbar :: navbar(page='caribarang')}"></nav>
+<nav th:replace="~{fragments/navbar :: navbar(page='bonus')}"></nav>
 <div class="container">
   <div class="text-center pt-5">
     <h2>Filter Permintaan Pengiriman</h2>
   </div>
   <form action="/filter-permintaan-pengiriman" method="get" class="mb-3">
-      <!--            <input type="text" name="searchQuery" class="form-control" placeholder="Cari barang" />-->
       <select name="sku" class="search-input form-control">
         <div class="" th:each="barang, iterationStatus : ${listBarang}">
           <option th:value="${barang.sku}" th:text="${barang.merk}"></option>
@@ -25,9 +24,9 @@
       </select>
     <br><br>
     <div class="d-flex justify-content-between w-50 mx-auto">
-      <input style="width: 250px" name="start-date" type="date" />
+      <input style="width: 250px" class="px-2" name="start-date" type="date" />
       <p class="mx-3">hingga</p>
-      <input style="width: 250px;" name="end-date" type="date" />
+      <input style="width: 250px" class="px-2" name="end-date" type="date" />
     </div>
     <br>
     <button class="btn btn-primary float-end w-25 ">Cari</button>

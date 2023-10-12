@@ -41,7 +41,12 @@
 <!-- First Container -->
 <div class="w-75 mx-auto d-flex justify-content-between mt-5">
     <h2 class="fw-bold">Detail Permintaan Pengiriman</h2>
-    <a type="button" class="btn btn-md btn-danger" th:href="@{/permintaan-pengiriman/} + ${permintaanPengiriman.idPermintaanPengiriman} + @{/cancek}">Cancel Permintaan</a>
+    <a type="button" class="btn btn-md btn-danger"
+       th:if="${!permintaanPengiriman.isCancelled}"
+       th:href="@{/permintaan-pengiriman/} + ${permintaanPengiriman.idPermintaanPengiriman} + @{/cancel}">
+        Cancel Permintaan
+    </a>
+    <a class="btn btn-secondary" th:unless="${!permintaanPengiriman.isCancelled}" disabled>Sudah di-cancel</a>
 </div>
 
 <!-- Second Container -->

@@ -124,6 +124,18 @@ public class PermintaanPengirimanController {
             model.addAttribute("flashMessage", ex.getReason());
             return "form-tambah-permintaan-pengiriman";
         }
+    }
+
+    @GetMapping("/{idPermintaanPengiriman}/cancel")
+    public String cancelPermintaanPengiriman(@PathVariable(value = "idPermintaanPengiriman") Long idPermintaanPengiriman,
+                                             Model model) {
+        try {
+            PermintaanPengiriman permintaanPengirimanCancelled = permintaanPengirimanService.cancelPermintaanPengiriman(idPermintaanPengiriman);
+            model.addAttribute("message", String.format("Permintaan pengiriman dengan nomor pengiriman %s berhasil dihapus", permintaanPengirimanCancelled.getNomorPengiriman()));
+        } catch (ResponseStatusException ex) {
+            model.addAttribute("message", ex.getReason());
+        }
+        return "cancel-permintaan-pengiriman";
 
     }
 }

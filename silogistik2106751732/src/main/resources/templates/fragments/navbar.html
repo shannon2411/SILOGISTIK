@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" th:classappend="${#strings.toLowerCase(page) == 'gudang' ? 'active' : ''}" th:href="@{/gudang}" id="gudangDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true">Gudang</a>
+            <a class="nav-link dropdown-toggle" th:classappend="${#strings.toLowerCase(page) == 'gudang' ? 'active' : ''}" id="gudangDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true">Gudang</a>
             <div class="dropdown-menu" aria-labelledby="gudangDropdown">
                 <a class="dropdown-item" th:classappend="${#strings.toLowerCase(page) == 'daftargudang' ? 'active' : ''}" th:href="@{/gudang}">Daftar Gudang</a>
                 <a class="dropdown-item" th:classappend="${#strings.toLowerCase(page) == 'caribarang' ? 'active' : ''}" th:href="@{/gudang/cari-barang}">Cari Barang</a>
@@ -33,10 +33,10 @@
             <a class="nav-link" th:classappend="${#strings.toLowerCase(page) == 'barang' ? 'active' : ''}" th:href="@{/barang}">Barang</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:classappend="${#strings.toLowerCase(page) == 'pengiriman' ? 'active' : ''}" th:href="@{/}">Permintaan Pengiriman</a>
+            <a class="nav-link" th:classappend="${#strings.toLowerCase(page) == 'pengiriman' ? 'active' : ''}" th:href="@{/permintaan-pengiriman}">Permintaan Pengiriman</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:classappend="${#strings.toLowerCase(page) == 'bonus' ? 'active' : ''}" th:href="@{/}">Bonus</a>
+            <a class="nav-link" th:classappend="${#strings.toLowerCase(page) == 'bonus' ? 'active' : ''}" th:href="@{/filter-permintaan-pengiriman}">Bonus</a>
         </li>
       </ul>
     </div>

@@ -20,4 +20,6 @@ public interface PermintaanPengirimanService {
     String generateNomorPengiriman(PermintaanPengiriman permintaanPengiriman);
 
     List<PermintaanPengiriman> filterPermintaanPengiriman(String sku, LocalDate startDate, LocalDate endDate);
+
+    PermintaanPengiriman cancelPermintaanPengiriman(Long idPermintaanPengiriman);
 }
