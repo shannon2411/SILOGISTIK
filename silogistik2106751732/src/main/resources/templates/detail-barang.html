@@ -22,7 +22,7 @@
   <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
 </head>
 <body>
-<nav th:replace="~{fragments/navbar :: navbar(page='gudang')}"></nav>
+<nav th:replace="~{fragments/navbar :: navbar(page='barang')}"></nav>
 <div
         th:if="${flashMessage}"
         class="alert alert-success alert-dismissible fade show"
@@ -114,7 +114,7 @@
     <h3 class="mt-3 text-secondary">Belum ada gudang yang menampung barang ini!</h3>
   </div>
 
-  <a type="button" class="btn btn-md btn-primary" href="/barang">Kembali</a>
+  <a type="button" class="btn btn-md btn-secondary" href="/barang">Kembali</a>
 </div>
 <script type="text/javascript">
   setTimeout(function () {

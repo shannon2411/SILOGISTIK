@@ -7,7 +7,7 @@
   <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
   <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
   <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
-  <title>View All Permintaan Pengiriman</title>
+  <title>Daftar Permintaan Pengiriman</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 <div class="container">
   <div class="text-center pt-5">
     <h2>Daftar Permintaan Pengiriman</h2>
-    <a type="button" class="btn btn-md btn-primary" th:href="@{/permintaan-pengiriman/tambah}">+Tambah Permintaan Pengiriman</a>
+    <a type="button" class="btn btn-md btn-outline-primary" th:href="@{/permintaan-pengiriman/tambah}">+Tambah Permintaan Pengiriman</a>
   </div>
 
   <div th:if="${listPermintaanPengiriman.size() != 0}">
@@ -50,14 +50,13 @@
       <tbody>
       <tr th:each="permintaanPengiriman, iterationStatus: ${listPermintaanPengiriman}">
         <td th:text="${iterationStatus.count}"></td>
-<!--        <td th:text="${permintaanPengiriman.waktuPermintaan}"</td>-->
         <td th:text="${#temporals.format(permintaanPengiriman.waktuPermintaan, 'dd-MM-yyyy, HH:mm')}"></td>
         <td th:text="${permintaanPengiriman.nomorPengiriman}"></td>
         <td th:text="${permintaanPengiriman.namaPenerima}"></td>
         <td th:text="${permintaanPengiriman.alamatPenerima}"></td>
         <td th:text="${permintaanPengiriman.tanggalPengiriman}"></td>
         <td>
-          <a type="button" class="btn btn-md btn-secondary" th:href="@{/permintaan-pengiriman/{idPermintaanPengiriman}(idPermintaanPengiriman=${permintaanPengiriman.idPermintaanPengiriman})}">Detail</a>
+          <a type="button" class="btn btn-md btn-primary" th:href="@{/permintaan-pengiriman/{idPermintaanPengiriman}(idPermintaanPengiriman=${permintaanPengiriman.idPermintaanPengiriman})}">Detail</a>
         </td>
       </tr>
       </tbody>

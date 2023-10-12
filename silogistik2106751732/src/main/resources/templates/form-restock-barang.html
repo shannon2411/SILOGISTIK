@@ -5,7 +5,9 @@
   <meta charset="UTF-8" />
   <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
   <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-  <title>Form Restock Gudang</title>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <title>Restock Gudang</title>
 </head>
 
 <body>
@@ -32,7 +34,7 @@
           <input class="form-control" type="hidden" th:field="*{namaGudang}"/>
           <input class="form-control" type="hidden" th:field="*{alamatGudang}"/>
           <th>
-            <button class="btn btn-primary" type="submit" name="addRow">+Tambah Barang</button>
+            <button class="btn btn-outline-primary" type="submit" name="addRow">+Tambah Barang</button>
           </th>
           <table class="table">
             <thead>
@@ -48,7 +50,7 @@
 
               <input class="form-control" type="hidden" th:field="*{listBarangDimuatGudang[__${iterationStatus.index}__].idGudang}"/>
               <td>
-                <select required class="form-control" th:field="*{listBarangDimuatGudang[__${iterationStatus.index}__].skuBarang}">
+                <select required class="form-control search-input" th:field="*{listBarangDimuatGudang[__${iterationStatus.index}__].skuBarang}">
                   <div th:each="barang : ${listBarang}">
                     <option th:if="${barang}" th:value="${barang.sku}" th:text="${barang.merk}"></option>
                   </div>
@@ -65,12 +67,19 @@
           </table>
 
           <button class="btn btn-primary" type="submit">Simpan</button>
-          <a class="btn btn-primary" href="@{/gudang/{idGudang}(idGudang=${gudang.idGudang})}">Batal</a>
+          <a class="btn btn-secondary" href="@{/gudang/{idGudang}(idGudang=${gudang.idGudang})}">Batal</a>
 
         </form>
       </div>
 
 </div>
+<script>
+  $(document).ready(function () {
+    $('.search-input').select2({
+      width: '100%'
+    });
+  });
+</script>
 
 </body>
 </html>

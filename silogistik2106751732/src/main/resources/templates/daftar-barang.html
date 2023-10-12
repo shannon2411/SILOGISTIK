@@ -7,7 +7,7 @@
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
-    <title>View All Barang</title>
+    <title>Daftar Barang</title>
 </head>
 
 <body>
@@ -31,7 +31,7 @@
 
     <div class="text-center pt-5">
         <h2>Daftar Barang</h2>
-        <a type="button" class="btn btn-md btn-primary" th:href="@{/barang/tambah}">+Tambah Barang</a>
+        <a type="button" class="btn btn-md btn-outline-primary" th:href="@{/barang/tambah}">+Tambah Barang</a>
     </div>
     <div th:if="${listBarang.size() != 0}">
         <table id="myTable" class="display">
@@ -55,7 +55,7 @@
                 <td th:text="${barang.totalStok}"></td>
                 <td th:text="'Rp' + ${#numbers.formatDecimal(barang.hargaBarang, 0, 'POINT', 0, 'POINT')}"></td>
                 <td>
-                    <a type="button" class="btn btn-md btn-secondary" th:href="@{/barang/{idBarang}(idBarang=${barang.sku})}">Detail</a>
+                    <a type="button" class="btn btn-md btn-primary" th:href="@{/barang/{idBarang}(idBarang=${barang.sku})}">Detail</a>
                 </td>
             </tr>
             </tbody>

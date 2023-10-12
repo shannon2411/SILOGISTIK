@@ -7,7 +7,7 @@
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
-    <title>View All Gudang</title>
+    <title>Daftar Gudang</title>
 </head>
 
 <body>
@@ -35,7 +35,7 @@
                 <td th:text="${gudang.namaGudang}"></td>
                 <td th:text="${gudang.alamatGudang}"></td>
                 <td>
-                    <a type="button" class="btn btn-md btn-secondary" th:href="@{/gudang/{idGudang}(idGudang=${gudang.idGudang})}">Detail</a>
+                    <a type="button" class="btn btn-md btn-primary" th:href="@{/gudang/{idGudang}(idGudang=${gudang.idGudang})}">Detail</a>
                 </td>
             </tr>
             </tbody>
