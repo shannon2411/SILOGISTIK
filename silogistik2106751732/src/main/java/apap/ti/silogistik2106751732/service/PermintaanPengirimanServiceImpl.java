@@ -6,7 +6,10 @@ import apap.ti.silogistik2106751732.model.PermintaanPengiriman;
 import apap.ti.silogistik2106751732.model.PermintaanPengirimanBarang;
 import apap.ti.silogistik2106751732.repository.PermintaanPengirimanDB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -19,7 +22,7 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
     PermintaanPengirimanDB permintaanPengirimanDB;
 
     @Override
-    public void savePermintaanPengiriman(PermintaanPengiriman permintaanPengiriman) {
+    public void savePermintaanPengiriman(PermintaanPengiriman permintaanPengiriman) throws ResponseStatusException {
         permintaanPengiriman.setIsCancelled(false);
         permintaanPengiriman.setWaktuPermintaan(LocalDateTime.now());
 
@@ -27,6 +30,14 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
         permintaanPengiriman.setNomorPengiriman(nomorPengiriman);
         for (PermintaanPengirimanBarang barangPermintaan : permintaanPengiriman.getListBarangPermintaan()) {
             barangPermintaan.setIdPermintaanPengiriman(permintaanPengiriman);
+            List<GudangBarang> listGudangBarang = barangPermintaan.getSkuBarang().getListGudangMemuatBarang();
+            int totalStokBarang = 0;
+            for (GudangBarang gudangBarang : listGudangBarang) {
+                totalStokBarang = totalStokBarang + gudangBarang.getStok();
+            }
+            if (totalStokBarang < barangPermintaan.getKuantitasPengiriman()) {
+               throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Barang %s (%s) hanya memiliki stok sebanyak %d", barangPermintaan.getSkuBarang().getMerk(), barangPermintaan.getSkuBarang().getSku(), totalStokBarang));
+            }
         }
         permintaanPengirimanDB.save(permintaanPengiriman);
     }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -103,11 +104,18 @@ public class PermintaanPengirimanController {
 
         CreatePermintaanPengirimanRequestDTO processedDTO = permintaanPengirimanService.accumulateBarangPermintaan(createPermintaanPengirimanRequestDTO);
         PermintaanPengiriman newPermintaanPengiriman = permintaanPengirimanMapper.createPermintaanPengirimanRequestDTOToPermintaanPengiriman(processedDTO);
-        permintaanPengirimanService.savePermintaanPengiriman(newPermintaanPengiriman);
-        // Add variables for rendering in Thymeleaf, if needed
-        redirectAttrs.addFlashAttribute("flashMessage", "Permintaan pengiriman berhasil ditambahkan");
+        try {
+            permintaanPengirimanService.savePermintaanPengiriman(newPermintaanPengiriman);
+            redirectAttrs.addFlashAttribute("flashMessage", "Permintaan pengiriman berhasil ditambahkan");
 
-        return "redirect:/permintaan-pengiriman"; // Adjust the view name as needed
+            return "redirect:/permintaan-pengiriman";
+        } catch (ResponseStatusException ex) {
+            model.addAttribute("listKaryawan", karyawanService.getAllKaryawan());
+            model.addAttribute("listBarang", barangService.getAllBarang());
+            model.addAttribute("permintaanPengirimanDTO", createPermintaanPengirimanRequestDTO);
+            model.addAttribute("flashMessage", ex.getReason());
+            return "form-tambah-permintaan-pengiriman";
+        }
 
     }
 }

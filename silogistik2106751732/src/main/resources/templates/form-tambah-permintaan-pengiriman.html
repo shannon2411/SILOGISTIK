@@ -14,6 +14,21 @@
 
 <body>
 <nav th:replace="~{fragments/navbar :: navbar(page='pengiriman')}"></nav>
+<div
+        th:if="${flashMessage}"
+        class="alert alert-danger alert-dismissible fade show"
+        role="alert"
+        id="myAlert"
+        style="position: fixed; top: 50px; left: 10%; right: 10%; z-index: 9999; width: 75%"
+        th:text="${flashMessage}"
+>
+    <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+    ></button>
+</div>
 <div class="container mt-5">
       <div class="justify-content-center">
         <h2 class="text-center">Tambah Permintaan Pengiriman </h2>
@@ -107,6 +122,10 @@
             width: '100%'
         });
     });
+    setTimeout(function () {
+        var myAlert = document.getElementById("myAlert");
+        myAlert.style.display = "none";
+    }, 3000);
 </script>
 </body>
 </html>

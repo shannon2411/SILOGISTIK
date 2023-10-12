@@ -50,8 +50,8 @@
       <tbody>
       <tr th:each="permintaanPengiriman, iterationStatus: ${listPermintaanPengiriman}">
         <td th:text="${iterationStatus.count}"></td>
-        <td th:text="${permintaanPengiriman.waktuPermintaan}"</td>
-<!--        <td th:text="${#dates.format(permintaanPengiriman.waktuPermintaan, 'dd/MM/yyyy HH:mm:ss')}"></td>-->
+<!--        <td th:text="${permintaanPengiriman.waktuPermintaan}"</td>-->
+        <td th:text="${#temporals.format(permintaanPengiriman.waktuPermintaan, 'dd-MM-yyyy, HH:mm')}"></td>
         <td th:text="${permintaanPengiriman.nomorPengiriman}"></td>
         <td th:text="${permintaanPengiriman.namaPenerima}"></td>
         <td th:text="${permintaanPengiriman.alamatPenerima}"></td>
