@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <title>View All Buku</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar(page='caribarang')}"></nav>
+<div class="container">
+  <div class="text-center pt-5">
+    <h2>Filter Permintaan Pengiriman</h2>
+  </div>
+  <form action="/filter-permintaan-pengiriman" method="get" class="mb-3">
+      <!--            <input type="text" name="searchQuery" class="form-control" placeholder="Cari barang" />-->
+      <select name="sku" class="search-input form-control">
+        <div class="" th:each="barang, iterationStatus : ${listBarang}">
+          <option th:value="${barang.sku}" th:text="${barang.merk}"></option>
+        </div>
+      </select>
+    <br><br>
+    <div class="d-flex justify-content-between w-50 mx-auto">
+      <input style="width: 250px" name="start-date" type="date" />
+      <p class="mx-3">hingga</p>
+      <input style="width: 250px;" name="end-date" type="date" />
+    </div>
+    <br>
+    <button class="btn btn-primary float-end w-25 ">Cari</button>
+    <br><br>
+  </form>
+  <div th:if="${listPermintaanPengiriman}">
+    <div th:if="${listPermintaanPengiriman.size() != 0}">
+      <table id="myTable" class="display">
+        <thead class="mt-3">
+        <tr class="bg-dark text-white">
+          <th class="fw-normal">No</th>
+          <th class="fw-normal">Waktu Permintaan</th>
+          <th class="fw-normal">Nomor Pengiriman</th>
+          <th class="fw-normal">Nama Penerima</th>
+          <th class="fw-normal">Alamat Penerima</th>
+          <th class="fw-normal">Tanggal Pengiriman</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="permintaanPengiriman, iterationStatus: ${listPermintaanPengiriman}">
+          <td th:text="${iterationStatus.count}"></td>
+          <td th:text="${#temporals.format(permintaanPengiriman.waktuPermintaan, 'dd-MM-yyyy, HH:mm')}"></td>
+          <td th:text="${permintaanPengiriman.nomorPengiriman}"></td>
+          <td th:text="${permintaanPengiriman.namaPenerima}"></td>
+          <td th:text="${permintaanPengiriman.alamatPenerima}"></td>
+          <td th:text="${permintaanPengiriman.tanggalPengiriman}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div th:unless="${listPermintaanPengiriman.size() != 0}">
+      <h3 class="text-center mt-3 text-secondary">Tidak ditemukan permintaan pengiriman</h3>
+    </div>
+  </div>
+
+</div>
+<script>
+  $(document).ready(function () {
+    $('.search-input').select2({
+      width: '100%'
+    });
+  });
+</script>
+</body>
+
+</html>

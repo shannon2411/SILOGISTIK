@@ -5,6 +5,7 @@ import apap.ti.silogistik2106751732.model.Barang;
 import apap.ti.silogistik2106751732.model.PermintaanPengiriman;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PermintaanPengirimanService {
@@ -17,4 +18,6 @@ public interface PermintaanPengirimanService {
     CreatePermintaanPengirimanRequestDTO accumulateBarangPermintaan(CreatePermintaanPengirimanRequestDTO createPermintaanPengirimanRequestDTO);
 
     String generateNomorPengiriman(PermintaanPengiriman permintaanPengiriman);
+
+    List<PermintaanPengiriman> filterPermintaanPengiriman(String sku, LocalDate startDate, LocalDate endDate);
 }

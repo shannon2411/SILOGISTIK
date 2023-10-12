@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -62,10 +63,8 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
     public CreatePermintaanPengirimanRequestDTO accumulateBarangPermintaan(CreatePermintaanPengirimanRequestDTO createPermintaanPengirimanRequestDTO) {
         List<PermintaanPengirimanBarang> listBarangPermintaan = createPermintaanPengirimanRequestDTO.getListBarangPermintaan();
             Map<String, PermintaanPengirimanBarang> accumulatedListBarangPermintaan = new HashMap<>();
-//        listBarangDimuatGudang.get()
         for (PermintaanPengirimanBarang barangPermintaan : listBarangPermintaan) {
             String sku = barangPermintaan.getSkuBarang().getSku();
-//            gudangBarang.setIdGudang(gudangMapper.restockBarangRequestDTOtoGudang(restockDto));
             if (accumulatedListBarangPermintaan.get(sku) == null) {
                 accumulatedListBarangPermintaan.put(sku, barangPermintaan);
             } else if (barangPermintaan.getId() == null) {
@@ -74,7 +73,6 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
             } else {
                 int newKuantitas = accumulatedListBarangPermintaan.get(sku).getKuantitasPengiriman() + barangPermintaan.getKuantitasPengiriman();
                 accumulatedListBarangPermintaan.get(sku).setKuantitasPengiriman(newKuantitas);
-//                gudangBarangDB.deleteById(gudangBarang.getId());
             }
         }
         List<PermintaanPengirimanBarang> updatedListBarangPermintaan = accumulatedListBarangPermintaan.values().stream().toList();
@@ -109,6 +107,13 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
         String waktuStr = permintaanPengiriman.getWaktuPermintaan().toString();
         String nomorPengiriman = String.format(format, totalBarang, kodeLayanan, waktu);
         return nomorPengiriman;
+    }
+
+    @Override
+    public List<PermintaanPengiriman> filterPermintaanPengiriman(String sku, LocalDate startDate, LocalDate endDate) {
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.withDayOfMonth(endDate.getDayOfMonth() + 1).atStartOfDay();
+        return permintaanPengirimanDB.findPermintaanPengirimanByWaktuPengirimanRangeAndBarang(sku, startDateTime, endDateTime);
     }
 
 }
