@@ -74,7 +74,9 @@
             <tbody>
             <tr th:each="barangGudang, iterationStatus: ${gudang.listBarangDimuatGudang}">
                 <td th:text="${iterationStatus.count}"></td>
-                <td th:text="${barangGudang.skuBarang}"></td>
+                <td>
+                    <a class="text-decoration-none" th:text="${barangGudang.skuBarang}" th:href="@{/barang/} + ${barangGudang.skuBarang}"></a>
+                </td>
                 <td th:text="${barangGudang.merk}"></td>
                 <td th:text="${barangGudang.stok}"></td>
                 <td th:text="${barangGudang.hargaBarang}"></td>

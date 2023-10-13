@@ -9,7 +9,9 @@ import apap.ti.silogistik2106751732.repository.BarangDB;
 import apap.ti.silogistik2106751732.repository.GudangBarangDB;
 import apap.ti.silogistik2106751732.repository.GudangDB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -29,7 +31,14 @@ public class GudangServiceImpl implements GudangService{
     private GudangMapper gudangMapper;
 
     @Override
-    public void saveGudang(Gudang gudang) {
+    public void saveGudang(Gudang gudang) throws ResponseStatusException {
+        if (gudang.getListBarangDimuatGudang() != null) {
+            for (GudangBarang gudangBarang : gudang.getListBarangDimuatGudang()) {
+                if (gudangBarang.getStok() <= 0) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stok tidak boleh 0");
+                }
+            }
+        }
         gudangDB.save(gudang);
     }
 

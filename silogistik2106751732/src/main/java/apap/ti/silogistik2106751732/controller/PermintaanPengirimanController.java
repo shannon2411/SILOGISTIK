@@ -131,8 +131,11 @@ public class PermintaanPengirimanController {
                                              Model model) {
         try {
             PermintaanPengiriman permintaanPengirimanCancelled = permintaanPengirimanService.cancelPermintaanPengiriman(idPermintaanPengiriman);
+            model.addAttribute("isSuccess", true);
+
             model.addAttribute("message", String.format("Permintaan pengiriman dengan nomor pengiriman %s berhasil dihapus", permintaanPengirimanCancelled.getNomorPengiriman()));
         } catch (ResponseStatusException ex) {
+            model.addAttribute("isSuccess", false);
             model.addAttribute("message", ex.getReason());
         }
         return "cancel-permintaan-pengiriman";

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -52,15 +53,21 @@ public class BarangController {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors().stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
             model.addAttribute("validationErrors", errors);
-            return "kon";
+            return "400";
         } else {
             System.out.println("no error detected");
         }
         Barang barang = barangMapper.createBarangRequestDTOToBarang(barangDTO);
+        try {
+            barangService.saveBarang(barang);
+            redirectAttrs.addFlashAttribute("flashMessage", String.format("Barang %s (%s) berhasil ditambahkan", barang.getMerk(), barang.getSku()));
+            return "redirect:/barang";
+        } catch (ResponseStatusException ex) {
+            model.addAttribute("flashMessage", ex.getReason());
+            model.addAttribute("barangDTO", barangDTO);
+            return "form-tambah-barang";
+        }
 
-        barangService.saveBarang(barang);
-        redirectAttrs.addFlashAttribute("flashMessage", String.format("Barang %s (%s) berhasil ditambahkan", barang.getMerk(), barang.getSku()));
-        return "redirect:/barang";
     }
 
     @GetMapping("/{skuBarang}")
@@ -87,9 +94,15 @@ public class BarangController {
         } else {
             System.out.println("no error detected");
         }
-        barangService.saveBarang(barang);
-        redirectAttrs.addFlashAttribute("flashMessage", String.format("Barang %s (%s) berhasil diubah", barang.getMerk(), skuBarang));
-        return "redirect:/barang/" + skuBarang;
+        try {
+            barangService.saveBarang(barang);
+            redirectAttrs.addFlashAttribute("flashMessage", String.format("Barang %s (%s) berhasil diubah", barang.getMerk()));
+            return "redirect:/barang";
+        } catch (ResponseStatusException ex) {
+            model.addAttribute("flashMessage", ex.getReason());
+            model.addAttribute("barangDTO", barang);
+            return "form-ubah-barang";
+        }
     }
 
 

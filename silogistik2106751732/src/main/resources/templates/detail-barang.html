@@ -102,7 +102,10 @@
       <tbody>
       <tr th:each="gudangBarang, iterationStatus: ${barang.listGudangMemuatBarang}">
         <td th:text="${iterationStatus.count}"></td>
-        <td th:text="${gudangBarang.namaGudang}"></td>
+
+        <td>
+          <a class="text-decoration-none" th:text="${gudangBarang.namaGudang}" th:href="@{/gudang/} + ${gudangBarang.idGudang}"></a>
+        </td>
         <td th:text="${gudangBarang.alamatGudang}"></td>
         <td th:text="${gudangBarang.stok}"></td>
       </tr>

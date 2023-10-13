@@ -25,12 +25,17 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
 
     @Override
     public void savePermintaanPengiriman(PermintaanPengiriman permintaanPengiriman) throws ResponseStatusException {
+        if (permintaanPengiriman.getBiayaPengiriman() <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Biaya pengiriman tidak boleh nol");
+        }
         permintaanPengiriman.setIsCancelled(false);
         permintaanPengiriman.setWaktuPermintaan(LocalDateTime.now());
-
         String nomorPengiriman = generateNomorPengiriman(permintaanPengiriman);
         permintaanPengiriman.setNomorPengiriman(nomorPengiriman);
         for (PermintaanPengirimanBarang barangPermintaan : permintaanPengiriman.getListBarangPermintaan()) {
+            if (barangPermintaan.getKuantitasPengiriman() <= 0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Kuantitas tidak boleh nol");
+            }
             barangPermintaan.setIdPermintaanPengiriman(permintaanPengiriman);
             List<GudangBarang> listGudangBarang = barangPermintaan.getSkuBarang().getListGudangMemuatBarang();
             int totalStokBarang = 0;
@@ -41,6 +46,7 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Barang %s (%s) hanya memiliki stok sebanyak %d", barangPermintaan.getSkuBarang().getMerk(), barangPermintaan.getSkuBarang().getSku(), totalStokBarang));
             }
         }
+
         permintaanPengirimanDB.save(permintaanPengiriman);
     }
 
@@ -121,8 +127,16 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
         Optional<PermintaanPengiriman> permintaanPengirimanOpt = permintaanPengirimanDB.findById(idPermintaanPengiriman);
         if (permintaanPengirimanOpt.isPresent()) {
             PermintaanPengiriman permintaanPengiriman = permintaanPengirimanOpt.get();
+            LocalDateTime limitCancel = permintaanPengiriman.getWaktuPermintaan().withDayOfMonth(
+                    permintaanPengiriman.getWaktuPermintaan().getDayOfMonth() + 1
+            );
+            LocalDateTime now = LocalDateTime.now();
             if (permintaanPengiriman.getIsCancelled()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Permintaan pengiriman ini sudah di-cancel");
+            }
+            if (now.isAfter(limitCancel)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Permintaan pengiriman tidak dapat di-cancel karena telah melewati 24 jam");
+
             }
             permintaanPengiriman.setIsCancelled(true);
             permintaanPengirimanDB.save(permintaanPengiriman);

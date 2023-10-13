@@ -17,7 +17,9 @@
 <nav th:replace="~{fragments/navbar :: navbar(page='pengiriman')}"></nav>
 <div style="height: 80vh" class="d-flex justify-content-center align-items-center">
   <div class="text-center">
-    <box-icon style="height: 70px" type='solid' name='check-circle' color="green" size="cssSize"></box-icon>
+    <box-icon th:if="${isSuccess}" style="height: 70px" type='solid' name='check-circle' color="green" size="cssSize"></box-icon>
+    <box-icon th:unless="${isSuccess}" style="height: 70px" type='solid' name='error' color="red" size="cssSize"></box-icon>
+
     <br> <br>
     <h3 th:text="${message}"></h3>
     <br>

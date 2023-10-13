@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -109,13 +110,20 @@ public class GudangController {
 
         RestockBarangRequestDTO processedDTO = gudangService.restockBarang(restockBarangRequestDTO);
         Gudang newGudang = gudangMapper.restockBarangRequestDTOtoGudang(processedDTO);
-        gudangService.saveGudang(newGudang);
+        try {
+            gudangService.saveGudang(newGudang);
+            redirectAttrs.addFlashAttribute("flashMessage", "Berhasil melakukan restock");
+            return "redirect:/gudang/" + newGudang.getIdGudang(); // Adjust the view name as needed
+        } catch (ResponseStatusException ex) {
+            model.addAttribute("gudangDTO", restockBarangRequestDTO);
+            model.addAttribute("listBarang", barangService.getAllBarang());
+            model.addAttribute("flashMessage", ex.getReason());
+            return "form-restock-barang";
+        }
 
 
         // Add variables for rendering in Thymeleaf, if needed
-        redirectAttrs.addFlashAttribute("flashMessage", "Berhasil melakukan restock");
 
-        return "redirect:/gudang/" + newGudang.getIdGudang(); // Adjust the view name as needed
 
     }
 
