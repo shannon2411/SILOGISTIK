@@ -79,7 +79,7 @@
                 </td>
                 <td th:text="${barangGudang.merk}"></td>
                 <td th:text="${barangGudang.stok}"></td>
-                <td th:text="${barangGudang.hargaBarang}"></td>
+                <td th:text="'Rp' + ${#numbers.formatDecimal(barangGudang.hargaBarang, 0, 'POINT', 0, 'POINT')}"></td>
             </tr>
             </tbody>
 

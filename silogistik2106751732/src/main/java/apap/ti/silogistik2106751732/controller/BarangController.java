@@ -96,7 +96,7 @@ public class BarangController {
         }
         try {
             barangService.saveBarang(barang);
-            redirectAttrs.addFlashAttribute("flashMessage", String.format("Barang %s (%s) berhasil diubah", barang.getMerk()));
+            redirectAttrs.addFlashAttribute("flashMessage", String.format("Barang %s (%s) berhasil diubah", barang.getMerk(), barang.getSku()));
             return "redirect:/barang";
         } catch (ResponseStatusException ex) {
             model.addAttribute("flashMessage", ex.getReason());

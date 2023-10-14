@@ -119,7 +119,9 @@
             <tbody>
             <tr th:each="barangPermintaan, iterationStatus: ${permintaanPengiriman.listBarangPermintaan}">
                 <td th:text="${iterationStatus.count}"></td>
-                <td th:text="${barangPermintaan.skuBarang.sku}"></td>
+                <td>
+                    <a class="text-decoration-none" th:text="${barangPermintaan.skuBarang.sku}" th:href="@{/barang/} + ${barangPermintaan.skuBarang.sku}"></a>
+                </td>
                 <td th:text="${barangPermintaan.skuBarang.merk}"></td>
                 <td th:text="${barangPermintaan.kuantitasPengiriman}"></td>
                 <td th:text="'Rp' + ${#numbers.formatDecimal(barangPermintaan.skuBarang.hargaBarang * barangPermintaan.kuantitasPengiriman, 0, 'POINT', 0, 'POINT')}"></td>

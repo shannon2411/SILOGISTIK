@@ -18,7 +18,6 @@
     </div>
     <form action="/gudang/cari-barang" method="get" class="mb-3">
         <div class="input-group align-items-center">
-<!--            <input type="text" name="searchQuery" class="form-control" placeholder="Cari barang" />-->
             <select name="sku" class="search-input form-control">
                 <div class="" th:each="barang, iterationStatus : ${listBarang}">
                     <option th:value="${barang.sku}" th:text="${barang.merk}"></option>
@@ -42,7 +41,11 @@
                 <tbody>
                 <tr th:each="gudangBarang, iterationStatus: ${listGudang}">
                     <td th:text="${iterationStatus.count}"></td>
-                    <td th:text="${gudangBarang.idGudang.namaGudang}"></td>
+                    <td >
+                        <a th:text="${gudangBarang.idGudang.namaGudang}"
+                           th:href="@{/gudang/} + ${gudangBarang.idGudang.idGudang}"
+                           class="text-decoration-none"></a>
+                    </td>
                     <td th:text="${gudangBarang.idGudang.alamatGudang}"></td>
                     <td th:text="${gudangBarang.stok}"></td>
                 </tr>

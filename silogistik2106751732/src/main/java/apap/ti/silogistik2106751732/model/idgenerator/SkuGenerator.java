@@ -54,15 +54,15 @@ public class SkuGenerator implements IdentifierGenerator, Configurable {
                 break;
         }
 
-        String query = String.format("select %s from %s where sku like '%s%%'",
+        String query = String.format("select %s from %s",
                 session.getEntityPersister(obj.getClass().getName(), obj)
                         .getIdentifierPropertyName(),
-                obj.getClass().getSimpleName(), prefix);
+                obj.getClass().getSimpleName());
 
         Stream<String> ids = session.createQuery(query).stream();
 
         Long max = ids.map(o -> {
-                    return (o.replace(prefix, ""));
+                    return (o.substring(4));
                 }).mapToLong(Long::parseLong)
                 .max()
                 .orElse(0L);
