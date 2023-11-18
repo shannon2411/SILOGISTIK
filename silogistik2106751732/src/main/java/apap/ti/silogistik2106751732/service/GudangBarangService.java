@@ -8,4 +8,6 @@ import java.util.List;
 public interface GudangBarangService {
     void deleteGudangBarang(GudangBarang gudangBarang);
     List<GudangBarang> getAllGudangBarangBySkuBarang(String skuBarang);
+
+    List<GudangBarang> getAllGudangBarang();
 }

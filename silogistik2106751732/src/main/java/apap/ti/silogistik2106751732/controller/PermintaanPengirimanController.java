@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +110,13 @@ public class PermintaanPengirimanController {
             return "form-tambah-permintaan-pengiriman";
         }
 
+        LocalDate sekarang = LocalDate.now();
+        if(createPermintaanPengirimanRequestDTO.getTanggalPengiriman()!= null){
+                LocalDate deliverydate = createPermintaanPengirimanRequestDTO.getTanggalPengiriman();
+                if(deliverydate.isBefore(sekarang) || deliverydate.isEqual(sekarang)){
+                    return "error-yasmin";
+                }
+        }
 
         CreatePermintaanPengirimanRequestDTO processedDTO = permintaanPengirimanService.accumulateBarangPermintaan(createPermintaanPengirimanRequestDTO);
         PermintaanPengiriman newPermintaanPengiriman = permintaanPengirimanMapper.createPermintaanPengirimanRequestDTOToPermintaanPengiriman(processedDTO);

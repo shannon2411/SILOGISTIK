@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Gudang</title>
+    <style>
+        /* Style for containers */
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        /* Style for buttons */
+        .button {
+            float: right;
+        }
+    </style>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-css}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: datatables-js}" th:remove="tag"></object>
+</head>
+<body>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <h2>Maaf, permintaan pengiriman tidak dapat dibuat</h2>
+            <a type="button" class="btn btn-primary" href="/permintaan-pengiriman">Lihat Semua Permintaan Pengiriman</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

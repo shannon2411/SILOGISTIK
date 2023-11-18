@@ -12,4 +12,5 @@ public interface BarangService {
 
     Barang getBarangById(String skuBarang);
 
+
 }

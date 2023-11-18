@@ -65,12 +65,13 @@ public class GudangServiceImpl implements GudangService{
         for (GudangBarang gudangBarang : listBarangDimuatGudang) {
             String sku = gudangBarang.getSkuBarang().getSku();
             gudangBarang.setIdGudang(gudangMapper.restockBarangRequestDTOtoGudang(restockDto));
+            //blom ada gudangbarang di listbarang baru
             if (accumulatedListBarangDimuatGudang.get(sku) == null) {
                 accumulatedListBarangDimuatGudang.put(sku, gudangBarang);
-            } else if (gudangBarang.getId() == null) {
+            } else if (gudangBarang.getId() == null) { //
                 int newStok = accumulatedListBarangDimuatGudang.get(sku).getStok() + gudangBarang.getStok();
                 accumulatedListBarangDimuatGudang.get(sku).setStok(newStok);
-            } else {
+            } else { // id ada
                 int newStok = accumulatedListBarangDimuatGudang.get(sku).getStok() + gudangBarang.getStok();
                 accumulatedListBarangDimuatGudang.get(sku).setStok(newStok);
                 gudangBarangDB.deleteById(gudangBarang.getId());

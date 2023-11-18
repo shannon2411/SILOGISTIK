@@ -35,5 +35,12 @@ public class GudangBarangServiceImpl implements GudangBarangService {
         }
         List<GudangBarang> listGudangMemuatBarang = barang.getListGudangMemuatBarang();
         return listGudangMemuatBarang;
-    };
+    }
+
+    @Override
+    public List<GudangBarang> getAllGudangBarang() {
+        return gudangBarangDb.findAll();
+    }
+
+    ;
 }
